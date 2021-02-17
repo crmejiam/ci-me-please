@@ -1,0 +1,21 @@
+language: java
+install: 
+- sudo apt install default-jre
+- gradle assemble
+
+os: linux
+# dist: xenial
+jobs:
+  include:
+    - stage: "Checkout"
+    - stage: "Test"
+    - stage: "Build"
+    - stage: "Notification"
+    - stage: "Deploy"
+
+
+after_success:
+- echo 'Test succeeded'
+
+after_failure:
+- echo 'Test failed'
