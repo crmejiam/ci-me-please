@@ -11,12 +11,11 @@ jobs:
   - stage: Build
     script: "./gradlew build"
     script: "./gradlew run"
-  - stage: Notification
-    notifications:
-      slack:
-        secure: aR8fi2vtSuFQ0uDeC7iQzUkuXosXGuYaEB23cBtqkRrCYfm7r6I5T8Gygd7C8kZukvYiiuZd2MdWn7DAyQWW+ptpwQwevzUeUt8HuQb3YT3YznZAiDjmLkEnTBk6l0glvR519SVNlIfu8ocGGY1fk+TdCSoUs/deR/F01idUBaqYTfQRsvWngzpAcc43hDyMpB0eqYvfKVYkt+gJY10Jj/o4UluW7p86MlxhZWmVybqGQrIsikq2BDTuiZcQbYxSPruArTt+D4/33qXjFPpM2+BweLSAhvSdny8iaERa2eLu86rK2wcJbAKoWFQbXnooAAJwS/G08zGJFjCGKSPAHdEgmqSWx0wHgDkq/rtaf0P5DQpjA98OWlNrDoxXH+2czLDj0Zfg8Vr+uJ6WXv/QqN7KGRcyGpPzeqYTEIrLXddT0vWQnKppKPpa7vBz0xRaCL2m1phESsycuI87v1Q+2QZXYJWNIqbAMQYJc/lingWiKUDOGpYur9kG+BRaDVCNslBuoypkoZ3+L05R5iGBJnk2eVhZFUahWCwhw/dcn3+8DvJsbS1Noftd5WslaYes56sjgdf/of1VDwKMLXWCFCxBld687tdL7ThUJIhi5KZEdd8RMkNtSfZiK+zOykYSRyBS8jXHtm1j9Uin/toHOLqjysHE+yalBcPB5tsnSa8=
-      email: false
   - stage: Deploy
+notifications:
+  slack:
+    secure: aR8fi2vtSuFQ0uDeC7iQzUkuXosXGuYaEB23cBtqkRrCYfm7r6I5T8Gygd7C8kZukvYiiuZd2MdWn7DAyQWW+ptpwQwevzUeUt8HuQb3YT3YznZAiDjmLkEnTBk6l0glvR519SVNlIfu8ocGGY1fk+TdCSoUs/deR/F01idUBaqYTfQRsvWngzpAcc43hDyMpB0eqYvfKVYkt+gJY10Jj/o4UluW7p86MlxhZWmVybqGQrIsikq2BDTuiZcQbYxSPruArTt+D4/33qXjFPpM2+BweLSAhvSdny8iaERa2eLu86rK2wcJbAKoWFQbXnooAAJwS/G08zGJFjCGKSPAHdEgmqSWx0wHgDkq/rtaf0P5DQpjA98OWlNrDoxXH+2czLDj0Zfg8Vr+uJ6WXv/QqN7KGRcyGpPzeqYTEIrLXddT0vWQnKppKPpa7vBz0xRaCL2m1phESsycuI87v1Q+2QZXYJWNIqbAMQYJc/lingWiKUDOGpYur9kG+BRaDVCNslBuoypkoZ3+L05R5iGBJnk2eVhZFUahWCwhw/dcn3+8DvJsbS1Noftd5WslaYes56sjgdf/of1VDwKMLXWCFCxBld687tdL7ThUJIhi5KZEdd8RMkNtSfZiK+zOykYSRyBS8jXHtm1j9Uin/toHOLqjysHE+yalBcPB5tsnSa8=
+  email: false
 after_success:
 - echo 'Test succeeded'
 after_failure:
