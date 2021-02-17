@@ -27,5 +27,9 @@ dependencies {
 }
 // end::dependencies[]
 
+// stage task for heroku to deploy our app
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
 // tag::wrapper[]
 // end::wrapper[]
