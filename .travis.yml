@@ -12,6 +12,13 @@ jobs:
     script: "./gradlew build"
     script: "./gradlew run"
   - stage: Deploy
+    deploy:
+      provider: heroku
+      api_key:
+        secure: S7S1nsObm/CJzUdrtxA0nxbBVMIDVddD3JMVlz1bXNRPdEIG3HdtaEGMcsQl6RwWzQa/dRBO63PowPMjEDIJSyExS7dMCeyxAmNsakWL5x7QU/b2gAuG2BblwdOEafDl3ZuhpHRQTd7S45Sq2XsfHYD7mTXBA2R5VwOqEUp+rOKdnW3pzGN29jz+PgqfqbdpeaKdyo4+PQTMhXJAu6XIurl6RHnvMx/Mv7gVBRErWGJm1EO9znEEpJLZhdAobcugKGTIg2pmHoju3VMewy5l1nIgI1mQiDgK2YYzxi7YJA7nWFUwBEsom/P6tQd2xi0AVAaFf1JfJCB8w7KvF0A4d+kdbPOyKg0djgsEGLQfjDJfX5QBI4P6HmCQuxRFeCHpcM5l8Uhildpitmh/0puWfeVfpGwTCHsilXe7NZtXtR4PpPbkec9im/mFYugLnBjIkc3R0vkONoRShg4xBx5oRShZMM6uU4+M9Ray6pDGm2u6y10Q19WmBKaWwbjWxKRLnFY+aOMXbGvtDGIolHx5zTKdJzS8c9cX7t2hr1+7u0sW5GMKz8JEctAlFTshnukY2GEfpCHCbUcnYwHPm50uHfRKJMXd8IMew7f2vKgEvT/LaqmJd2w61NxVUbslBlsE2aUR7/pNsN8NWLFFbvY+BMeA/1Mh0dCd0KxP54/CsSI=
+      app: 'ci-me-please'
+      on:
+        repo: crmejiam/ci-me-please
 notifications:
   slack:
     secure: aR8fi2vtSuFQ0uDeC7iQzUkuXosXGuYaEB23cBtqkRrCYfm7r6I5T8Gygd7C8kZukvYiiuZd2MdWn7DAyQWW+ptpwQwevzUeUt8HuQb3YT3YznZAiDjmLkEnTBk6l0glvR519SVNlIfu8ocGGY1fk+TdCSoUs/deR/F01idUBaqYTfQRsvWngzpAcc43hDyMpB0eqYvfKVYkt+gJY10Jj/o4UluW7p86MlxhZWmVybqGQrIsikq2BDTuiZcQbYxSPruArTt+D4/33qXjFPpM2+BweLSAhvSdny8iaERa2eLu86rK2wcJbAKoWFQbXnooAAJwS/G08zGJFjCGKSPAHdEgmqSWx0wHgDkq/rtaf0P5DQpjA98OWlNrDoxXH+2czLDj0Zfg8Vr+uJ6WXv/QqN7KGRcyGpPzeqYTEIrLXddT0vWQnKppKPpa7vBz0xRaCL2m1phESsycuI87v1Q+2QZXYJWNIqbAMQYJc/lingWiKUDOGpYur9kG+BRaDVCNslBuoypkoZ3+L05R5iGBJnk2eVhZFUahWCwhw/dcn3+8DvJsbS1Noftd5WslaYes56sjgdf/of1VDwKMLXWCFCxBld687tdL7ThUJIhi5KZEdd8RMkNtSfZiK+zOykYSRyBS8jXHtm1j9Uin/toHOLqjysHE+yalBcPB5tsnSa8=
