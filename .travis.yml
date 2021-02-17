@@ -7,9 +7,10 @@ jobs:
   include:
   - stage: Checkout
   - stage: Test
-    script: "./'gradlew test'"
+    script: "./gradlew test"
   - stage: Build
-    script: "./'gradlew run'"
+    script: "./gradlew build"
+    script: "./gradlew run"
   - stage: Notification
     notifications:
       slack:
