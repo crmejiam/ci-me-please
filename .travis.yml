@@ -3,8 +3,7 @@ install:
 - sudo apt install default-jre
 - gradle assemble
 os: linux
-script: if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests;
-fi
+script: 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests;fi'
 branches:
   only:
     - main
@@ -37,7 +36,6 @@ jobs:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker build -t github.com/crmejiam/ci-me-please .
     - docker images
-    - docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project crmejiam/ci-me-please gradle build
     - docker tag ci-me-please $DOCKER_USERNAME/ci-me-please
     - docker push $DOCKER_USERNAME/ci-me-please
   - stage: Test docker image
