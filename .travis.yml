@@ -36,8 +36,8 @@ jobs:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker build -t github.com/crmejiam/ci-me-please .
     - docker images
-    - docker tag ci-me-please $DOCKER_USERNAME/ci-me-please
-    - docker push $DOCKER_USERNAME/ci-me-please
+    - docker tag ci-me-please $DOCKER_USERNAME/ci-me-please:version1.0
+    - docker push $DOCKER_USERNAME/ci-me-please:version1.0
   - stage: Test docker image
     script: docker run --rm $DOCKER_USERNAME/ci-me-please
 notifications:
