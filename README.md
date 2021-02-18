@@ -40,3 +40,6 @@ Send us:
 - Google *everything* you don't know (Gradle, Travis, and Heroku are probably new tools for you, do you understand their purpose?)
 - Remember, you cannot automate something you haven't done it manually first (I mean, you could, but you would struggle more than is necessary)
 - Send too many Slack notifications and people will start ignoring them (nobody wants to see your 20-something attempts at setting up Slack notifications, use a test channel or your private conversation)
+
+# Travis Status Image
+[![Build Status](https://travis-ci.com/crmejiam/ci-me-please.svg?branch=main)](https://travis-ci.com/crmejiam/ci-me-please)
