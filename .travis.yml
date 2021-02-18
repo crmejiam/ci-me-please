@@ -7,7 +7,7 @@ script: 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pul
 branches:
   only:
     - main
-    
+
 jobs:
   include:
   - stage: Checkout
@@ -26,15 +26,6 @@ jobs:
       on:
         repo: crmejiam/ci-me-please
         all_branches: true
-  - stage: Build docker image
-    script:
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker build -t github.com/crmejiam/ci-me-please .
-    - docker images
-    - docker tag ci-me-please $DOCKER_USERNAME/ci-me-please:version1.0
-    - docker push $DOCKER_USERNAME/ci-me-please:version1.0
-  - stage: Test docker image
-    script: docker run --rm $DOCKER_USERNAME/ci-me-please
 notifications:
   slack:
     secure: aR8fi2vtSuFQ0uDeC7iQzUkuXosXGuYaEB23cBtqkRrCYfm7r6I5T8Gygd7C8kZukvYiiuZd2MdWn7DAyQWW+ptpwQwevzUeUt8HuQb3YT3YznZAiDjmLkEnTBk6l0glvR519SVNlIfu8ocGGY1fk+TdCSoUs/deR/F01idUBaqYTfQRsvWngzpAcc43hDyMpB0eqYvfKVYkt+gJY10Jj/o4UluW7p86MlxhZWmVybqGQrIsikq2BDTuiZcQbYxSPruArTt+D4/33qXjFPpM2+BweLSAhvSdny8iaERa2eLu86rK2wcJbAKoWFQbXnooAAJwS/G08zGJFjCGKSPAHdEgmqSWx0wHgDkq/rtaf0P5DQpjA98OWlNrDoxXH+2czLDj0Zfg8Vr+uJ6WXv/QqN7KGRcyGpPzeqYTEIrLXddT0vWQnKppKPpa7vBz0xRaCL2m1phESsycuI87v1Q+2QZXYJWNIqbAMQYJc/lingWiKUDOGpYur9kG+BRaDVCNslBuoypkoZ3+L05R5iGBJnk2eVhZFUahWCwhw/dcn3+8DvJsbS1Noftd5WslaYes56sjgdf/of1VDwKMLXWCFCxBld687tdL7ThUJIhi5KZEdd8RMkNtSfZiK+zOykYSRyBS8jXHtm1j9Uin/toHOLqjysHE+yalBcPB5tsnSa8=
