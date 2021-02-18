@@ -3,14 +3,15 @@ install:
 - sudo apt install default-jre
 - gradle assemble
 os: linux
-script: 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests; fi'
+script: if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests;
+  fi
 jobs:
   include:
   - stage: Checkout
   - stage: Test
     script: "./gradlew test"
   - stage: Build
-    script: 
+    script:
     - "./gradlew build"
     - "./gradlew run"
   - stage: Deploy
@@ -18,15 +19,30 @@ jobs:
       provider: heroku
       api_key:
         secure: S7S1nsObm/CJzUdrtxA0nxbBVMIDVddD3JMVlz1bXNRPdEIG3HdtaEGMcsQl6RwWzQa/dRBO63PowPMjEDIJSyExS7dMCeyxAmNsakWL5x7QU/b2gAuG2BblwdOEafDl3ZuhpHRQTd7S45Sq2XsfHYD7mTXBA2R5VwOqEUp+rOKdnW3pzGN29jz+PgqfqbdpeaKdyo4+PQTMhXJAu6XIurl6RHnvMx/Mv7gVBRErWGJm1EO9znEEpJLZhdAobcugKGTIg2pmHoju3VMewy5l1nIgI1mQiDgK2YYzxi7YJA7nWFUwBEsom/P6tQd2xi0AVAaFf1JfJCB8w7KvF0A4d+kdbPOyKg0djgsEGLQfjDJfX5QBI4P6HmCQuxRFeCHpcM5l8Uhildpitmh/0puWfeVfpGwTCHsilXe7NZtXtR4PpPbkec9im/mFYugLnBjIkc3R0vkONoRShg4xBx5oRShZMM6uU4+M9Ray6pDGm2u6y10Q19WmBKaWwbjWxKRLnFY+aOMXbGvtDGIolHx5zTKdJzS8c9cX7t2hr1+7u0sW5GMKz8JEctAlFTshnukY2GEfpCHCbUcnYwHPm50uHfRKJMXd8IMew7f2vKgEvT/LaqmJd2w61NxVUbslBlsE2aUR7/pNsN8NWLFFbvY+BMeA/1Mh0dCd0KxP54/CsSI=
-      app: 'ci-me-please-app'
+      app: ci-me-please-app
       on:
         repo: crmejiam/ci-me-please
         all_branches: true
+  - stage: Build docker image
+    script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t ci-me-please .
+    - docker images
+    - docker tag ci-me-please $DOCKER_USERNAME/ci-me-please
+    - docker push $DOCKER_USERNAME/ci-me-please
+  - stage: Test docker image
+    script: docker run --rm $DOCKER_USERNAME/ci-me-please
 notifications:
   slack:
     secure: aR8fi2vtSuFQ0uDeC7iQzUkuXosXGuYaEB23cBtqkRrCYfm7r6I5T8Gygd7C8kZukvYiiuZd2MdWn7DAyQWW+ptpwQwevzUeUt8HuQb3YT3YznZAiDjmLkEnTBk6l0glvR519SVNlIfu8ocGGY1fk+TdCSoUs/deR/F01idUBaqYTfQRsvWngzpAcc43hDyMpB0eqYvfKVYkt+gJY10Jj/o4UluW7p86MlxhZWmVybqGQrIsikq2BDTuiZcQbYxSPruArTt+D4/33qXjFPpM2+BweLSAhvSdny8iaERa2eLu86rK2wcJbAKoWFQbXnooAAJwS/G08zGJFjCGKSPAHdEgmqSWx0wHgDkq/rtaf0P5DQpjA98OWlNrDoxXH+2czLDj0Zfg8Vr+uJ6WXv/QqN7KGRcyGpPzeqYTEIrLXddT0vWQnKppKPpa7vBz0xRaCL2m1phESsycuI87v1Q+2QZXYJWNIqbAMQYJc/lingWiKUDOGpYur9kG+BRaDVCNslBuoypkoZ3+L05R5iGBJnk2eVhZFUahWCwhw/dcn3+8DvJsbS1Noftd5WslaYes56sjgdf/of1VDwKMLXWCFCxBld687tdL7ThUJIhi5KZEdd8RMkNtSfZiK+zOykYSRyBS8jXHtm1j9Uin/toHOLqjysHE+yalBcPB5tsnSa8=
   email: false
+services:
+- docker
 after_success:
-- echo 'Test succeeded'
+- echo 'Yay! Success!'
 after_failure:
-- echo 'Test failed'
+- echo 'Damn... Failure'
+env:
+  global:
+  - secure: cD9Zj2QJg2lHpGiS5nhjmzRlTYizwSToFqQvvyEp0ThPEs/7mJQ99Qby4V+lEjx8pqycs9cJUqXVnR8dv24ybDRx5N85vQtmB/69wdRlSCJFOw2o9RtmiHKhoBr9r/1GC35Vt7Bze7CqFcOhUG0n7TCcRwR6MZ3KDGFaC4HMTbhQbf9C92lquMBRBDlrZjXIgUQg5at2sMlDkX6qyUYQk0ATmJshIXAs6tbKPztoH2sDaiq2z2NjJKsFfsRlPKnDC9SVPuWwPRalu+gI4+aIu0E5K1ygn4TnRS1aBn7ScxiVo6qlTuZ1gctuBb4XpEORPInCxofNHT8LZE+up9HO56UEq0Hw7ybXneiRhIzl/ng62yUgAZGOqq3KMD2EXYHFhdvY6AmsKgyaxUCobQMSD0+SW5dsymF90z+d7hDQwycFqA5dT0bRIynhgZbpMOQgOG7a8q0LO1m+BvPuq5sGBPY4a39CWn/qoZ4LY5kSY6odVHAZFp7XkztvHXRkQoOQ0vlkfxJ+K/N+4idvw4PP96G7JNDDxl7wxOUcwEPOI0WeUcgAjhDq4Od2Vdc7i20LgUfTCc8FMfcWVghrzLHRCLaRqDCA2s3TYvC4SosuRhZDHkUphxlw9mn9QmXh6IgsHK0j+QAEccxiuiKdCo9RSQK9icOMsfYlOVqwyRoSqxE=
+  - secure: LGQN4TKuhpl0/tDIPpFbkeRQUjAnggGLBC5gvujsKqdbfl9T6vadV79wF5qn3mczYJfZ6Mhw3W7ZDDGOxdNLvDaepFHiXDutylXD0+k+vluo+GTWEH3NF3RRxz/AWLmcRNcxg+yfraS8maTNsdh3q4tY8IxsjhOnrUoVafWvan2WdHLFskSZ9/0KJ/8N7sMhr2JZg2Q0bu/ttK+dWbWsNOLCOXPZ0S0Kfx0g+Bjn0vwGgr8DiyHCJ+Y0bR1f1wfZiB4GRiPPUJWSfMX1fVhL0wWz/KJekzBH7Qh9Z0HZjIYd7eMvmzAnwE/eZ38seOmT7wGiXDnKM8tIkjtNHrhk2XHu41ycgrckXUZzZKTIpgZhXaa145DKERswf4cq1UpQIhIngmfNr2Ph0ZtyaBVvfmixN/31EicwlSgDM+c0J7nBiPG4AYt2NE4waxP/jh7Jisf8+8J/uZqzxMXU++eRdVfNBYazHViZA9r6msQXG5xa2C2IeeAUEB6jqj6hgV27mTveVNrhWmA3f4uwnUDtBp/0YOtrVkbm8/drKTFB07mv2Wu+MEBmsISh4RKianU7JCoUDLvWOAwowyWL1ktf89wOtiR9IIl8wAO5HU92Drm1BbIagTe/OOnghmEGSEJJckejzFPQ1AG250rva2wE8hpiUN1U6UyzTd9IZ5Iuubw=
