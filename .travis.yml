@@ -4,7 +4,11 @@ install:
 - gradle assemble
 os: linux
 script: if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests;
-  fi
+fi
+branches:
+  only:
+    - main
+  
 env:
   global:
   - secure: cD9Zj2QJg2lHpGiS5nhjmzRlTYizwSToFqQvvyEp0ThPEs/7mJQ99Qby4V+lEjx8pqycs9cJUqXVnR8dv24ybDRx5N85vQtmB/69wdRlSCJFOw2o9RtmiHKhoBr9r/1GC35Vt7Bze7CqFcOhUG0n7TCcRwR6MZ3KDGFaC4HMTbhQbf9C92lquMBRBDlrZjXIgUQg5at2sMlDkX6qyUYQk0ATmJshIXAs6tbKPztoH2sDaiq2z2NjJKsFfsRlPKnDC9SVPuWwPRalu+gI4+aIu0E5K1ygn4TnRS1aBn7ScxiVo6qlTuZ1gctuBb4XpEORPInCxofNHT8LZE+up9HO56UEq0Hw7ybXneiRhIzl/ng62yUgAZGOqq3KMD2EXYHFhdvY6AmsKgyaxUCobQMSD0+SW5dsymF90z+d7hDQwycFqA5dT0bRIynhgZbpMOQgOG7a8q0LO1m+BvPuq5sGBPY4a39CWn/qoZ4LY5kSY6odVHAZFp7XkztvHXRkQoOQ0vlkfxJ+K/N+4idvw4PP96G7JNDDxl7wxOUcwEPOI0WeUcgAjhDq4Od2Vdc7i20LgUfTCc8FMfcWVghrzLHRCLaRqDCA2s3TYvC4SosuRhZDHkUphxlw9mn9QmXh6IgsHK0j+QAEccxiuiKdCo9RSQK9icOMsfYlOVqwyRoSqxE=
@@ -33,6 +37,8 @@ jobs:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker build -t github.com/crmejiam/ci-me-please .
     - docker images
+    - docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project crmejiam/ci-me-please gradle build
+    - docker tag ci-me-please $DOCKER_USERNAME/ci-me-please
     - docker push $DOCKER_USERNAME/ci-me-please
   - stage: Test docker image
     script: docker run --rm $DOCKER_USERNAME/ci-me-please
