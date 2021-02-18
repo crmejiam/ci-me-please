@@ -3,14 +3,16 @@ install:
 - sudo apt install default-jre
 - gradle assemble
 os: linux
+script: 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests; fi'
 jobs:
   include:
   - stage: Checkout
   - stage: Test
     script: "./gradlew test"
   - stage: Build
-    script: "./gradlew build"
-    script: "./gradlew run"
+    script: 
+    - "./gradlew build"
+    - "./gradlew run"
   - stage: Deploy
     deploy:
       provider: heroku
