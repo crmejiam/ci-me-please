@@ -19,9 +19,10 @@ jobs:
     - "./gradlew run"
   - stage: Deploy
     deploy:
+      skip_cleanup: true 
       provider: heroku
       api_key:
-        secure: g+v9LHv8+DEqmlZWBkLTogLkEMKzVLR1kvqOHVz8OTWZeTIBFsiLBJX9lhzxR3CYGyBa7lkcSwM87g38DZTpeK/q+ZWvLiHmd/dlKEDQOMFafrRn5Q2u8xDJO8vKsWTDDzVeK7EzbK6iyKZDsixjTans97NWmPvNxJIn2aHtmdUGqWrVHbD9LbROjuiCVAA37v8WwrU8BOJpb6/vxz/mnyLQ22fD1htkeQdhN0BrjTb27T8KfP6gielNXikG44Ax0eZrh3XKYWEU3+PvMw3Z1I9Qsv3XjAJco7g2XafNGabHctNHq3736UxlxgexfYK9qFLEAGjgnvPyygLqSCMAUnsn8sIBxjgz7oFDD+N7EAVlmGeaiD/mta4qJzyMa900eq/uqFpwyQfursM+JAriCwhTPMD0Dlz+IpvjzhVfMLtvA6Qblh989EdrIcC8DxvCpCvgRf0SpZLNpaNlLRt9Uj0nk056vheR0tWoWHVFLgTy+imaPWbrNoRbInFwae6YspooezqkKKnOmd2CgrWwb7LGEjf2GpcJfaS1Hd0/07NwttwqwI/AU22iaYRkbZKpaRWeQ7+i8pvsrURoHkPIB6qwAptIbS5kmt/vmxEzuYFfB3TjFROc/E6ModU7SiL5Sr5LQEEV08YRCZZP5XIB+TMbqqIcaFzjOnVzaXhE6vU=
+        secure: ly5LgjHUbMSbTKp+17fY5dgY3Lq4QlKYsLUYOmXtexFKsU02XQdDZJQkQkbrs8yzabDbYC5gVOId94Hzxxcw6lkbr3Kdcex1PsktTUAmV97puD6/ArBGExjoWXsIvZo5I2ZciXnFOSw8kQPtMiNtwSHpkHSFkRvSqIPCN7sTa7T5C3Sv7YPaOWtBS6L3rQxixxOU0EwWq0Si2TirVDCxTKXdEWvt4dXb9Y8aXyynu0Q7ILT88i+FbK0Bt9BJmrS6Li2Uy8pyo1xJjhPeaI0JrKPMSszMVBYoKIg2tDG+bP20pTZtrL0VHcWc3wpDwgFJUOAZVpR/iKR71xt7LoHdBRMUrrG/NeP0X+FZocAJFOt6RDA9oZ6ep2CrMYVr4r2xjRRm0844QbXJN5ONnl1aDJ02qES/K/Lz3S36RFODGCKB4vYm1boPu7V8XpU/sas3koCHNngLRWOp6yFqVmu1kYTh1v0QrcKrYRiB989m6ijTeAyDfQHbK6okWgrfbFqxWz1Ts5cieNFEWtVH/toM2aAGYB9J7/3fzXYYKA77gzN2AzvXKEj7qqQFLUcEQdfkYX+M5ReOkRbj8UUJyeT6YOB6b+ngSAEn2d+9WEFUFj1Y3P6PHLexlPEiElnv3l9pjg2u0jadma2SOyqkhbKFb4AvHPmi45cUYM/p0nEuX1I=
       app: ci-me-please-app
       on:
         repo: crmejiam/ci-me-please
